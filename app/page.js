@@ -1,13 +1,15 @@
 "use client";
-import { Component } from 'react';
-import Navbar from '../components/Navbar';
-import './globals.css';
+import Navbar from "../components/Navbar";
+import "./globals.css";
 
-export default function Home({ pageProps }) {
+export default function Home() {
   return (
     <>
       <Navbar />
-      <Component {...pageProps} />
+      <main>
+        <h1>Welcome to SocialPostAI</h1>
+        {/* Your main content goes here */}
+      </main>
     </>
   );
 }

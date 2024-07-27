@@ -1,25 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import styles from "../styles/Navbar.module.css";
 import Link from "next/link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("");
-  const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router) {
-      setCurrentPath(router.pathname);
-    }
-  }, [router]);
+    setCurrentPath(pathname);
+  }, [pathname]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -28,9 +20,9 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navContainer}>
-        <a href="/" className={styles.logo}>
-          SocialPostAI
-        </a>
+        <Link href="/" className={styles.logo}>
+          SocialPost AI
+        </Link>
         <div className={styles.menuIcon} onClick={toggleMenu}>
           <span></span>
           <span></span>
@@ -55,10 +47,18 @@ export default function Navbar() {
           </li>
           <li className={styles.navItem}>
             <Link
-              href="/analytics"
-              className={currentPath === "/analytics" ? styles.active : ""}
+              href="/login"
+              className={currentPath === "/login" ? styles.active : ""}
             >
-              Analytics
+              Login
+            </Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link
+              href="/signup"
+              className={currentPath === "/signup" ? styles.active : ""}
+            >
+              Sign Up
             </Link>
           </li>
           <li className={styles.navItem}>
