@@ -1,48 +1,70 @@
 // components/PostGenerator.js
-import { useState } from 'react'
+import { useState } from 'react';
+import { schedulePost } from '../utils/schedulePosts';
 
 export default function PostGenerator() {
-    const [topic, setTopic] = useState('')
-    const [tone, setTone] = useState('')
-    const [keyPoints, setKeyPoints] = useState('')
-    const [generatedPost, setGeneratedPost] = useState('')
+    const [content, setContent] = useState('');
+    const [platform, setPlatform] = useState('twitter');
+    const [scheduledTime, setScheduledTime] = useState('');
+    const [mediaUrls, setMediaUrls] = useState([]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        const res = await fetch('/api/generate-post', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                topic,
-                brandGuidelines: { tone, keyPoints: keyPoints.split(',') }
-            })
-        })
-        const data = await res.json()
-        setGeneratedPost(data.post)
-    }
+        e.preventDefault();
+        try {
+            await schedulePost(content, platform, new Date(scheduledTime), mediaUrls);
+            alert('Post scheduled successfully!');
+            // Reset form
+            setContent('');
+            setPlatform('twitter');
+            setScheduledTime('');
+            setMediaUrls([]);
+        } catch (error) {
+            alert('Failed to schedule post: ' + error.message);
+        }
+    };
+
+    const handleMediaUpload = (e) => {
+        // In a real application, you would upload these files to a storage service
+        // and use the returned URLs. For this example, we'll use fake URLs.
+        const newMediaUrls = [...mediaUrls, ...Array.from(e.target.files).map((_, index) => `https://fake-url.com/media-${index + mediaUrls.length + 1}`)];
+        setMediaUrls(newMediaUrls);
+    };
 
     return (
         <form onSubmit={handleSubmit}>
+            <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="What's on your mind?"
+                rows={4}
+                cols={50}
+            />
+            <select value={platform} onChange={(e) => setPlatform(e.target.value)}>
+                <option value="twitter">Twitter</option>
+                <option value="facebook">Facebook</option>
+            </select>
             <input
-                type="text"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                placeholder="Topic"
+                type="datetime-local"
+                value={scheduledTime}
+                onChange={(e) => setScheduledTime(e.target.value)}
             />
             <input
-                type="text"
-                value={tone}
-                onChange={(e) => setTone(e.target.value)}
-                placeholder="Tone"
+                type="file"
+                multiple
+                accept="image/*,video/*"
+                onChange={handleMediaUpload}
             />
-            <input
-                type="text"
-                value={keyPoints}
-                onChange={(e) => setKeyPoints(e.target.value)}
-                placeholder="Key Points (comma-separated)"
-            />
-            <button type="submit">Generate Post</button>
-            {generatedPost && <div>{generatedPost}</div>}
+            {mediaUrls.length > 0 && (
+                <div>
+                    <p>Attached media:</p>
+                    <ul>
+                        {mediaUrls.map((url, index) => (
+                            <li key={index}>{url}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            <button type="submit">Schedule Post</button>
         </form>
-    )
+    );
 }

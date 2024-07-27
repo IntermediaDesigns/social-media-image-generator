@@ -1,9 +1,13 @@
+"use client";
+import { Component } from 'react';
+import Navbar from '../components/Navbar';
+import './globals.css';
 
-
-export default function Home() {
+export default function Home({ pageProps }) {
   return (
-    <main>
-      <h1>Hello</h1>
-    </main>
+    <>
+      <Navbar />
+      <Component {...pageProps} />
+    </>
   );
 }
