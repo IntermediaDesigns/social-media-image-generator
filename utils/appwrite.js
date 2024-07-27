@@ -1,16 +1,36 @@
-// utils/appwrite.js
-import { Client, Account } from 'appwrite'
+// src/lib/server/appwrite.js
+"use server";
+import { Client, Account } from "node-appwrite";
+import { cookies } from "next/headers";
 
-const client = new Client()
-    .setEndpoint('https://[HOSTNAME]/v1')
-    .setProject('[PROJECT_ID]')
+export async function createSessionClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT);
 
-export const account = new Account(client)
+  const session = cookies().get("my-custom-session");
+  if (!session || !session.value) {
+    throw new Error("No session");
+  }
 
-export const login = (email, password) => {
-    return account.createEmailSession(email, password)
+  client.setSession(session.value);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+  };
 }
 
-export const logout = () => {
-    return account.deleteSession('current')
+export async function createAdminClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
+    .setKey(process.env.NEXT_APPWRITE_KEY);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+  };
 }
