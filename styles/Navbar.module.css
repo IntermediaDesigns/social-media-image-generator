@@ -1,81 +1,110 @@
 /* styles/Navbar.module.css */
 .navbar {
-    background-color: #333;
-    padding: 1rem;
+  background-color: #333;
+  padding: 1rem;
 }
 
 .navContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .navMenu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .navItem {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .navItem a {
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem;
 }
 
-.navItem a:hover, .navItem a.active {
-    background-color: #555;
-    border-radius: 4px;
+.navItem a:hover,
+.navItem a.active {
+  background-color: #555;
+  border-radius: 4px;
 }
 
 .menuIcon {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .menuIcon span {
-    height: 2px;
-    width: 25px;
-    background-color: #fff;
-    margin-bottom: 4px;
-    border-radius: 2px;
+  height: 2px;
+  width: 25px;
+  background-color: #fff;
+  margin-bottom: 4px;
+  border-radius: 2px;
+}
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.logoutButton:hover {
+  background-color: #555;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {
-    .menuIcon {
-        display: flex;
-    }
+  .menuIcon {
+    display: flex;
+  }
 
-    .navMenu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        background-color: #333;
-        padding: 1rem;
-    }
+  .navMenu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #333;
+    padding: 1rem;
+  }
 
-    .navMenu.active {
-        display: flex;
-    }
+  .navMenu.active {
+    display: flex;
+  }
 
-    .navItem {
-        margin: 0.5rem 0;
-    }
+  .navItem {
+    margin: 0.5rem 0;
+  }
+}
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.logoutButton:hover {
+  background-color: #555;
+  border-radius: 4px;
 }
