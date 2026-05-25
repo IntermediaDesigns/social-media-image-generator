@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@huggingface/inference": "^2.8.0",
-    "appwrite": "^15.0.0",
-    "next": "14.2.5",
+    "@huggingface/inference": "^4.13.18",
+    "appwrite": "^25.2.0",
+    "next": "16.2.6",
     "node-appwrite": "^13.0.0",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "eslint": "^10.4.0",
+    "eslint-config-next": "16.2.6"
   }
 }
